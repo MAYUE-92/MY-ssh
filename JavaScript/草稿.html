@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+    </head>
+    <body>
+        <h1>JSON遍历</h1>
+        <p id="demo"></p>
+        <script type="text/javascript">
+            var js = {
+            "employees": [
+                {
+                    "firstName": "John",
+                    "lastName": "Doe"
+                    }, 
+                {
+                    "firstName": "Anna",
+                    "lastName": "Smith"
+                    },
+                {
+                    "firstName": "Peter",
+                    "lastName": "Jones"
+                    }
+                    ]
+                };
+            njs = JSON.parse(js.employees);
+            document.getElementById("demo").innerHTML=njs.employees[1].firstName+" "+njs.employees[1].lastName;
+            </script>
+    </body>
+</html>

@@ -1,0 +1,61 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "task g++",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",//添加gdb调试选项
+                "-m64", //解决16位无法运行
+                "-Wall",//开启额外警告
+                // "-static-libgcc",//静态链接libgcc，一般会加上
+                "-fexec-charset=GBK",//处理wingw乱码问题
+                "-finput-charset=UTF-8",//处理wingw乱码问题
+                "${fileDirname}\\*.cpp",
+                /* 
+                在tasks.json中，将"${fileDirname}\\*.cpp" 改写为"${file}":
+                同一个文件夹下可以有多个cpp文件包含main()函数。
+                多文件编译使用"${fileDirname}\\*.cpp":
+                同一个文件夹下只能有一个main()函数。
+                 */
+                "-o",//指定生成可执行文件的名称
+                "${fileDirname}\\bin\\${fileBasenameNoExtension}.exe"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "options": {
+                "cwd": "D:/mingw64/bin/"
+            },
+            "presentation": { //执行这个任务时的一些其他设定
+                "echo": true,//表示在执行任务时在终端要有输出
+                "reveal": "always", //执行任务时是否跳转到终端面板，可以为always，silent，never
+                "focus": false, //设为true后可以使执行task时焦点聚集在终端，但对编译来说，设为true没有意义，因为运行的时候才涉及到输入
+                "panel": "new" //每次执行这个task时都新建一个终端面板，也可以设置为shared，共用一个面板，不过那样会出现‘任务将被终端重用’的提示，比较烦人 
+            }
+        },
+        {//这个大括号里是‘运行(run)’任务，一些设置与上面的构建任务性质相同
+            "label": "run", 
+            "type": "shell", 
+            "dependsOn": "build", //任务依赖，因为要运行必须先构建，所以执行这个任务前必须先执行build任务，
+            "command": "${fileDirname}\\bin\\${fileBasenameNoExtension}.exe", //执行exe文件，只需要指定这个exe文件在哪里就好
+            "group": {
+                "kind": "test", //这一组是‘测试’组，将run任务放在test组里方便我们用快捷键执行
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true, //这个就设置为true了，运行任务后将焦点聚集到终端，方便进行输入
+                "panel": "new"
+            }
+        }
+    ]
+}

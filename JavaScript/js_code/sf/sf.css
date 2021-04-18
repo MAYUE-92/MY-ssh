@@ -1,0 +1,14 @@
+div{
+    /*设置左浮动效果*/
+    float: left;
+    /*设置文字行高*/
+    line-height: 26px;
+    width: 180px;
+}
+
+img{
+    float: left;
+    /*设置外边距上下为0，左右为10px*/
+    margin: 0 10px;
+    width: 390px;
+}
